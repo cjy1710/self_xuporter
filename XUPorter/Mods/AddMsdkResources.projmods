@@ -1,0 +1,14 @@
+{
+    "group": "",
+    "libs": [],
+    "frameworks": [],
+    "headerpaths": [],
+    "files": ["../../../Plugins/IOS/WGPlatformResources.bundle",
+	"../../../Plugins/IOS/MSDKResources.bundle",
+	"../../../Plugins/IOS/MidasIAPSDK.bundle"],
+	
+    "folders": [],    
+    "excludes": [],
+    "compiler_flags": [],
+    "linker_flags": []
+}
