@@ -1,3 +1,4 @@
+#define Apollo_Adapter
 using UnityEngine;
 
 using UnityEditor;
@@ -9,7 +10,7 @@ using System.IO;
 public static class XCodePostProcess
 {
 	private static string ENABLE_BITCODE = "NO"; // YES or NO
-	private  bool CheckAadpter = false; // YES or NO
+
 	[PostProcessBuild(999)]
 	public static void OnPostProcessBuild( BuildTarget target, string pathToBuiltProject )
 	{
@@ -54,8 +55,10 @@ public static class XCodePostProcess
 		EditorPlist(path);
 
 		EditorCode(uVerseion, path);
-		
+		#if Apollo_Adapter
         AdapterXCodePostProcess.EditorCodeAdapter(uVerseion, path);
+		AdapterXCodePostProcess.EditorPlist(path);
+		#endif
 		// Finally save the xcode project
 		project.Save();
 
@@ -133,99 +136,12 @@ public static class XCodePostProcess
 		XCPlist list =new XCPlist(filePath);
 		
 		string PlistAdd = @"
-			<key>LSApplicationQueriesSchemes</key>
-			<array>
-				<string>mqq</string>
-				<string>mqqapi</string>
-				<string>wtloginmqq2</string>
-				<string>mqqopensdkapiV4</string>
-				<string>mqqopensdkapiV3</string>
-				<string>mqqopensdkapiV2</string>
-				<string>mqqwpa</string>
-				<string>mqqOpensdkSSoLogin</string>
-				<string>mqqgamebindinggroup</string>
-				<string>mqqopensdkfriend</string>
-				<string>mqzone</string>
-				<string>weixin</string>
-				<string>wechat</string>
-				<string>weixinULAPI</string>
-                <string>mqqopensdkminiapp</string>
-                <string>mqqopensdklaunchminiapp</string>
-			</array>
-            <key>XG_FREE_ACCESS_ID</key>
-            <integer>{XG_FREE_ACCESS_ID}</integer>
-            <key>XG_V2_ACCESS_ID</key>
-            <integer>{IOS_XG_V2_ACCESS_ID}</integer>
-            <key>XG_V2_ACCESS_KEY</key>
-            <string>{IOS_XG_V2_ACCESS_KEY}</string>
-			<key>APPKEY_DENGTA</key>
-			<string>{DENGTA_APPKEY}</string>
-			<key>CFBundleURLTypes</key>
-			<array>
-				<dict>
-					<key>CFBundleTypeRole</key>
-					<string>Editor</string>
-					<key>CFBundleURLName</key>
-					<string>weixin</string>
-					<key>CFBundleURLSchemes</key>
-					<array>
-						<string>{WX_APPID}</string>
-					</array>
-				</dict>
-				<dict>
-					<key>CFBundleTypeRole</key>
-					<string>Editor</string>
-					<key>CFBundleURLName</key>
-					<string>tencentopenapi</string>
-					<key>CFBundleURLSchemes</key>
-					<array>
-						<string>tencent{QQ_APPID}</string>
-					</array>
-				</dict>
-				<dict>
-					<key>CFBundleTypeRole</key>
-					<string>Editor</string>
-					<key>CFBundleURLName</key>
-					<string>QQLaunch</string>
-					<key>CFBundleURLSchemes</key>
-					<array>
-						<string>tencentlaunch{QQ_APPID}</string>
-					</array>
-				</dict>
-				<dict>
-					<key>CFBundleTypeRole</key>
-					<string>Editor</string>
-					<key>CFBundleURLName</key>
-					<string>QQ</string>
-					<key>CFBundleURLSchemes</key>
-					<array>
-						<string>QQ{QQ_APPID_HEX}</string>
-					</array>
-				</dict>
-				<dict>
-					<key>CFBundleTypeRole</key>
-					<string>Editor</string>
-					<key>CFBundleURLName</key>
-					<string>apollourl</string>
-					<key>CFBundleURLSchemes</key>
-					<array>
-						<string>apollourl</string>
-					</array>
-				</dict>
-			</array>
-			<key>UISupportedInterfaceOrientations</key>
-			<array>
-				<string>UIInterfaceOrientationPortrait</string>
-				<string>UIInterfaceOrientationLandscapeLeft</string>
-				<string>UIInterfaceOrientationLandscapeRight</string>
-				<string>UIInterfaceOrientationPortraitUpsideDown</string>
-			</array>
 			<key>GCloud</key>
 		    <dict>
 		      <key>GameKey</key>
 		      <string>1234567890</string>
 		      <key>GameId</key>
-		      <string>{GAME_ID}</string>
+		      <string>123456789</string>
 		    </dict>
 		    <key>GCloudCore</key>
 		    <dict>
@@ -237,21 +153,21 @@ public static class XCodePostProcess
 			<key>CHANNEL_DENGTA</key>
 			<string>1001</string>
 			<key>WX_UNIVERSAL_LINK</key>
-            <string>{IOS_WX_UNIVERSAL_LINK}</string>
+            <string>https://wiki.ssl.msdk.qq.com/app/</string>
 			<key>MSDK_OfferId</key>
-			<string>{IOS_OFFER_ID}</string>
+			<string>1450000528</string>
 			<key>MSDK_ENV</key>
-			<string>{MSDK_ENV}</string>
+			<string>test</string>
 			<key>EnableMSDKLog</key>
 			<true/>
 			<key>QQAppID</key>
-			<string>{QQ_APPID}</string>
+			<string>1000001061</string>
 			<key>QQAppKey</key>
-			<string>{QQ_APPKEY}</string>
+			<string>GEkBatmPLXYY56oJ</string>
 			<key>WXAppID</key>
-			<string>{WX_APPID}</string>
+			<string>wxf58707b1adb71279</string>
 			<key>MSDKKey</key>
-			<string>{MSDK_KEY}</string>
+			<string>d4755682e2315e0fcea418d679223fcd</string>
             <key>MSDK_Webview_Force_Adapt_Bang_Screen</key>
             <false/>
 			<key>NeedNotice</key>
@@ -267,12 +183,12 @@ public static class XCodePostProcess
             <key>GCloud</key>
             <dict>
             <key>GameId</key>
-            <string>{GAME_ID}</string>
+            <string>123456789</string>
             </dict>
             <key>TDM</key>
             <dict>
             <key>AppId</key>
-            <string>{GAME_ID}</string>
+            <string>123456789</string>
             <key>TGEMIT_ROUTER_ADDRESS_FORMAL</key>
             <string>https://hc.tdm.qq.com:8013/tdm/v1/route</string>
             <key>TGEMIT_ROUTER_ADDRESS_TEST</key>
@@ -316,18 +232,5 @@ public static class XCodePostProcess
 			UnityAppController.WriteBelow ("[KeyboardDelegate Initialize];\n", "    [[ApolloApplication sharedInstance] setViewController:UnityGetGLViewController()];");
 			UnityAppController.WriteBelow ("SensorsCleanup();\n}", "- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler\r{\r    [[ApolloApplication sharedInstance] applicationContinueUserActivity:application Activity:userActivity];\r    return YES;\r}");
 		}
-	}
-
-	private static bool CheckAdapterDir(string filePath)
-	{
-		 StreamReader Reader = new StreamReader(filePath);
-		string text_all = Reader.ReadToEnd();            
-		if (Reader.Peek() != -1)
-		{
-			Reader.Close();
-			return true;
-		}
-		Reader.Close();
-		return false;		
 	}
 }
